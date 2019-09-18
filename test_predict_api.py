@@ -12,7 +12,7 @@ from sklearn.metrics import accuracy_score
 API_PREDICT_ENDPOINT = 'http://localhost:9090/api/predict'
 
 # your API key here 
-#API_KEY = "XXXXXXXXXXXXXXXXX"
+API_KEY = "376d873c859d7f9f268e1b9be883745b"
 
 # load the data set
 iris = load_iris()
@@ -37,9 +37,11 @@ print("dataframe_json:\n", dataframe_json)
 #print("y_true:\n", y_true)
 
 # send the request and get the results
+#headers = {'content-type': 'application/json', 'Accept-Charset': 'UTF-8', "Authorization": "Bearer user"}
 headers = {'content-type': 'application/json', 'Accept-Charset': 'UTF-8'}
 data = {
-  'dataframe_json' : dataframe_json
+  'dataframe_json': dataframe_json,
+  'api_token': API_KEY
 }
 data_json = json.dumps(data)
 req = requests.post(API_PREDICT_ENDPOINT, data=data_json, headers=headers)

@@ -12,9 +12,10 @@ from joblib import dump
 
 # defining the api-endpoint  
 API_DEPLOY_ENDPOINT = 'http://localhost:9090/api/deploy'
+#headers = {"Authorization": "Bearer user"}
 
 # your API key here 
-#API_KEY = "XXXXXXXXXXXXXXXXX"
+API_KEY = "376d873c859d7f9f268e1b9be883745b"
 
 # load the data set
 iris = load_iris()
@@ -47,9 +48,12 @@ print("score:\n", clf.score(X_test.values, y_test.values.ravel()))
 dump(clf, 'model.joblib')
 
 fin = open('model.joblib', 'rb')
-files = {'modelfile': fin}
+files = {'model_file': fin}
+data = {
+  'api_token': API_KEY
+}
 try:
-  req = requests.post(API_DEPLOY_ENDPOINT, files=files)
+  req = requests.post(API_DEPLOY_ENDPOINT, data=data, files=files) #, headers=headers)
   print(req.text)
 finally:
   fin.close()
